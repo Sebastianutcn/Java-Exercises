@@ -1,0 +1,218 @@
+/*
+Define an interface called ChessPiece which defines the prototype for the method move(). Create the specific classes
+for each of the chess pieces and implement the move() method according to the rules of movement on the chess board.
+The method takes as input the chess piece’s current location and the direction of the move given by the geographical
+coordinates (N, S, E, V, NE, NV, SE, SV), and returns the final position of the piece. Pay attention to the pieces which can
+move a different number of cells!!
+*/
+
+//just classes without main
+
+
+//Regina
+package lab3;
+import java.util.Arrays;
+
+public class Regina implements PiesaDeSah {
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		switch(directie) {
+		case "N": y++;
+		break;
+		case "NV": x--; y++;
+		break;
+		case "NE": x++; y++;
+		break;
+		case "S": y--;
+		break;
+		case "SV": x--; y--;
+		break;
+		case "SE": x++; y--;
+		break;
+		case "E": x++;
+		break;
+		case "V": x--;
+		break;
+		default: x=x; y=y;
+		break;
+		}
+		return ("("+x+", "+y+")");
+	}
+	public String mutaNPozitii(int n,int x, int y, String directie) {
+		String aux=new String();
+		int contor=0;
+		for(;contor<n;) {
+			aux=muta(x, y, directie);
+			contor++;
+		}
+		
+		return aux;
+	}
+}
+
+
+
+
+//Tura
+package lab3;
+
+public class Tura implements PiesaDeSah{
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		
+		switch(directie) {
+		case "N": y++;
+		break;
+		case "V": x--;
+		break;
+		case "E": x++;
+		break;
+		case "S": y--;
+		break;
+		}
+		
+		return ("("+x+", "+y+")");
+	}
+	public String mutaNPozitii(int n,int x, int y, String directie) {
+		String aux=new String();
+		while(n>0) {
+			aux=muta(x, y, directie);
+			n--;
+		}
+		return aux;
+	}
+}
+
+
+//Nebun
+package lab3;
+
+public class Nebun implements PiesaDeSah {
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		switch(directie) {
+		case "NV": x--; y++;
+		break;
+		case "NE": x++; y++;
+		break;
+		case "SV": x--; y--;
+		break;
+		case "SE": x++; y--;
+		break;
+		default: x=x; y=y;
+		break;
+		}
+		return ("("+x+", "+y+")");
+	}
+	public String mutaNPozitii(int n,int x, int y, String directie) {
+		String aux=new String();
+		while(n>0) {
+			aux=muta(x, y, directie);
+			n--;
+		}
+		return aux;
+	}
+}
+
+
+//Cal
+package lab3;
+
+public class Cal implements PiesaDeSah {
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		switch(directie) {
+		case "NVN": x--; y+=2;
+		break;
+		case "NVV": x-=2; y++;
+		break;
+		case "NEN": x++; y+=2;
+		break;
+		case "NEE": x+=2; y++;
+		break;
+		case "SVS": x--; y-=2;
+		break;
+		case "SVV": x-=2; y--;
+		break;
+		case "SEE": x+=2; y--;
+		break;
+		case "SES": x++; y-=2;
+		break;
+		default: x=x; y=y;
+		break;
+		}
+		return ("("+x+", "+y+")");
+	}
+	public String mutaNPozitii(int n,int x, int y, String directie) {
+		String aux=new String();
+		while(n>0) {
+			aux=muta(x, y, directie);
+			n--;
+		}
+		return aux;
+	}
+}
+
+
+//Rege
+package lab3;
+import java.util.Arrays;
+
+public class Rege implements PiesaDeSah {
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		switch(directie) {
+		case "N": y++;
+		break;
+		case "NV": x--; y++;
+		break;
+		case "NE": x++; y++;
+		break;
+		case "S": y--;
+		break;
+		case "SV": x--; y--;
+		break;
+		case "SE": x++; y--;
+		break;
+		case "E": x++;
+		break;
+		case "V": x--;
+		break;
+		default: x=x; y=y;
+		break;
+		}
+		
+		return ("("+x+", "+y+")");
+	}
+}
+
+
+
+//Pion
+package lab3;
+
+public class Pion implements PiesaDeSah{
+
+	@Override
+	public String muta(int x, int y, String directie) {
+		
+		switch(directie) {
+		case "N": y++;
+		break;
+		case "NV": x-=1; y+=1;
+		break;
+		case "NE": x+=1; y+=1;
+		break;
+		}
+		
+		return ("("+x+", "+y+")");
+	}
+		
+	
+}
+
