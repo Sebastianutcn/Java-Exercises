@@ -1,0 +1,60 @@
+/*
+9. Define an array of String variables that will be populated with all the playing cards from a complete package. A
+series of randomly picked cards will be extracted until the current card will have the clubs sign and a value
+greater than 8. At each step, the current card and the number of already extracted cards will be displayed.
+Hint: Use a random numbers generator. The cards which were already used are eliminated.
+*/
+
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Lab2 {
+
+	public static void main(String[] args)  {
+		
+		String[][] carti=new String[4][13];
+		String[] culoare= {"trefla", "inima rosie", "inima neagra", "romb"};
+		String[] aux= {"J", "Q", "K", "Ace"};
+		int[] numar=new int[13];
+		
+		for(int i=0;i<13;i++) {
+			numar[i]=(i+1);
+		}
+		
+		int k=0;
+		int l=0;
+		for(int i=0; i<4; i++) {
+			for(int j=0; j<13; j++) {
+				carti[i][j]=numar[j] + " " + culoare[i];
+			}
+		}
+		
+		for(int i=0; i<4; i++) {
+			for(int j=9; j<13; j++) {
+				carti[i][j]=aux[j-9]+" " + culoare[i];
+			}
+		}
+		
+		Random random = new Random();
+		int crt=random.nextInt(13);
+		int clr=random.nextInt(4);
+		int nr=0;
+		
+		String carte=new String();
+		carte=carti[clr][crt];
+		
+		do {
+			
+			nr++;
+			crt=random.nextInt(13);
+			clr=random.nextInt(4);
+			
+			carte=carti[clr][crt];
+			
+			System.out.println("\nExtragerea: "+nr);
+			System.out.println(carte);	
+			
+		}while(clr!=0 || crt<=8);
+	}		
+}
