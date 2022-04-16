@@ -1,0 +1,141 @@
+/*
+11. Implement the naive dots and crosses game (X-O) as an automated game. The application will randomly select
+at each step a position from the board at which to place the next symbol, alternating between X and O. The
+selected position cannot be an already filled square. The game ends when either there are no more empty
+squares on the board, or one of the symbols wins by completing a line, a column or a diagonal. Display on the
+screen each step of the algorithm as a matrix. Unfilled squares will be represented by the * character.
+Example:
+X * *
+* * *
+* * *
+--
+X * *
+* 0 *
+* * *
+--
+X * *
+* 0 *
+X * *
+--
+X * 0
+* 0 *
+X * *
+X * 0
+X 0 *
+X * *
+Game over!
+--------
+*Extend the application so that the dimensions of the board (number of rows and columns) can be changed. 
+*/
+
+
+//11. Implementați jocul X-0 naiv ca și joc automat. Programul va selecta aleator la fiecare pas o poziție pe care o va completa fie cu X, fie cu 0 în mod alternativ. Poziția selectată nu poate fi una completată deja. Jocul se termină atunci când nu mai există casuțe libere sau când unul dintre jucători a obținut o linie, coloană sau diagonală completă. Afișați pe ecra
+
+import java.util.Random;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Lab3{
+	
+		
+static public void display(char[] tab) {
+		
+		System.out.print(" "+tab[0]);
+		System.out.print(" "+tab[1]);
+		System.out.print(" "+tab[2]);
+		System.out.println();
+		System.out.print(" "+tab[3]);
+		System.out.print(" "+tab[4]);
+		System.out.print(" "+tab[5]);
+		System.out.println();
+		System.out.print(" "+tab[6]);
+		System.out.print(" "+tab[7]);
+		System.out.print(" "+tab[8]);
+		System.out.println("\n-----------");
+			
+	}
+	
+	static public boolean check(char[] tab){
+		if(tab[0]=='X'&&tab[1]=='X'&&tab[2]=='X') 	{ return true;}
+		if(tab[3]=='X'&&tab[4]=='X'&&tab[5]=='X')	{ return true;}
+		if(tab[6]=='X'&&tab[7]=='X'&&tab[8]=='X')	{ return true;}
+		if(tab[0]=='X'&&tab[3]=='X'&&tab[6]=='X')	{ return true;}
+		if(tab[1]=='X'&&tab[4]=='X'&&tab[7]=='X')	{ return true;}
+		if(tab[2]=='X'&&tab[5]=='X'&&tab[8]=='X')	{ return true;}
+		if(tab[0]=='X'&&tab[4]=='X'&&tab[8]=='X')	{ return true;}
+		if(tab[2]=='X'&&tab[4]=='X'&&tab[6]=='X')	{ return true;}
+		
+		if(tab[0]=='O'&&tab[1]=='O'&&tab[2]=='O') 	{ return true;}
+		if(tab[3]=='O'&&tab[4]=='O'&&tab[5]=='O')	{ return true;}
+		if(tab[6]=='O'&&tab[7]=='O'&&tab[8]=='O')	{ return true;}
+		if(tab[0]=='O'&&tab[3]=='O'&&tab[6]=='O')	{ return true;}
+		if(tab[1]=='O'&&tab[4]=='O'&&tab[7]=='O')	{ return true;}
+		if(tab[2]=='O'&&tab[5]=='O'&&tab[8]=='O')	{ return true;}
+		if(tab[0]=='O'&&tab[4]=='O'&&tab[8]=='O')	{ return true;}
+		if(tab[2]=='O'&&tab[4]=='O'&&tab[6]=='O')	{ return true;}
+		
+		return false;
+		
+		}
+
+	
+	static public void firstTurn(Boolean player1) {
+		Random random=new Random();
+		if(random.nextInt(2)==0)   player1=true;
+		else	player1=false;
+	}
+	
+	static public void game(char[] tab, boolean player1) {
+		Random random=new Random();
+		
+		while(check(tab)!=true) {
+			int aux=random.nextInt(9);
+			do {
+				aux=random.nextInt(9);
+				if(player1) {
+					if(tab[aux]=='*') {
+						tab[aux]='X';
+						display(tab);
+						if(check(tab)) {
+							System.out.println("X won");
+							break;
+						}
+						player1=false;
+					}
+			}
+			else {
+				if(tab[aux]=='*') {
+					tab[aux]='O';
+					display(tab);
+					if(check(tab)) {
+						System.out.println("O won");
+						break;
+					}					
+					player1=true;
+				}
+			}
+			}while(tab[aux]!='X'||tab[aux]!='O');
+		}
+		if(check(tab)==false)	System.out.println("Nobody won");
+	}
+
+	public static void main(String[] args)  {
+		
+		char[] tab=new char[9];
+		for(int i=0; i<9; i++)	tab[i]='*';
+		
+		boolean player1;		
+		Random random=new Random();
+		
+		if(random.nextInt(2)==0)   player1=true;
+		else	player1=false;
+		
+		if((player1)) System.out.println("\n X starts");
+		else		  System.out.println("\n O starts");
+		
+		display(tab);
+	
+		game(tab, player1);
+
+	}	
+		  }
