@@ -1,0 +1,78 @@
+/*
+Write a Java application which defines an authentication key with the format: XXXXX-XXXXX-XXXXX-XXXXX,
+where X is a character which can be either a digit or a letter. The application should verify if this key has exactly
+4 groups of characters with 5 characters each, and separated by the symbol ‘-‘. Also, compute the number of
+digits and letters from the authentication key. The number of digits should be greater than the number of
+letters, and the number of letters cannot be 0.
+If any of the above conditions are not met, display the message: “Invalid authentication key!”
+*/
+
+
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+class Main{
+	public static void main(String args[]){  
+		String key="XXXXX-XXXXX-XXXXX-XXXXX";
+		String string;
+		
+		Scanner in=new Scanner(System.in);
+		System.out.println("Dati un sir(XXXXX-XXXXX-XXXXX-XXXXX): ");
+		string=in.next();
+		
+		boolean isMatch=false;
+		
+		String[] sir=string.split("-");
+		
+		if(sir.length==4 &&
+		   sir[0].length()==5 &&
+		   sir[1].length()==5 &&
+		   sir[2].length()==5 &&
+	       sir[3].length()==5   ) 	isMatch=true;
+		
+		for(int i=0; i<sir.length; i++) {
+			for(int j=0; j<sir[i].length(); j++) {
+				if(((char)(sir[i].charAt(j)) <= 'z' && (char)(sir[i].charAt(j)) >= 'a')
+				    || ((char)(sir[i].charAt(j)) <= 'Z' && (char)(sir[i].charAt(j)) > 'A')
+				    ||(char)(sir[i].charAt(j)) <= '9' || (char)(sir[i].charAt(j)) >= '1') {
+					isMatch=true;
+				}
+				else
+					isMatch = false;
+			}
+		}
+		
+		if(!isMatch)	System.out.println("Trebuie folosite doar cifre sau litere!");
+		
+		else {
+		
+		System.out.println("Sirul respecta cheia(XXXXX-XXXXX-XXXXX-XXXXX): "+isMatch);
+		
+		int nrLitere=0, nrCifre=0;
+		
+		if(isMatch) {
+			for(int i=0; i<sir.length; i++) {
+				for(int j=0; j<sir[i].length(); j++) {
+					if((char)(sir[i].charAt(j))>64 &&
+					    (char)(sir[i].charAt(j))<91)
+						nrLitere++;
+					else if((char)(sir[i].charAt(j))>96 &&
+							(char)(sir[i].charAt(j))<123)
+						nrLitere++;
+					else
+						nrCifre++;
+				}
+			}
+		}
+		System.out.println("Nr. de litere: "+nrLitere);
+		System.out.println("Nr. de cifre: "+nrCifre);
+		if(nrLitere>=nrCifre && nrLitere==0) {
+			System.out.println("Cheie de autentificare incorecta");
+		}
+		else
+			System.out.println("Cheie de autentificare corecta");
+		}
+		
+	}
+}
+ 
