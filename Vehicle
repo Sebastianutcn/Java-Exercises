@@ -1,0 +1,172 @@
+/*
+Define a class called Vehicle which has as attributes the maximum number of passengers, its color and the maximum
+speed. Extend the Vehicle class within the MotorizedVehicle class which also includes the geo-location attributes (GPS
+coordonates – create a class for this type of object GeoLoc) and the moving speed of the vehicle. MotorizedVehicle can
+move from point A to point B (the points are specified using a Point object which has two GeoLoc attributes) by using the
+move(Point B) method and which returns the total duration of the trip.
+Create a new class called Airplane which extends the MotorizedVehicle class and which add the attribute altitude to the
+move(Point B) method. This method will return the time needed to take the trip by taking into account that the plane
+will travel on arc of a circle specified through points A and B and the maximum altitude reached by the plane (the
+maximum altitude is reached half-way between A and B).
+*/
+
+
+
+
+//Main
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+class Main{
+	
+	public static void main(String args[]){  
+		
+		GeoLoc g1=new GeoLoc(-1.7297222222222221, 53.32055555555556);
+		GeoLoc g2=new GeoLoc(-1.6997222222222223, 53.31861111111111);
+		
+		VehiculMotorizat vehiculMotorizat=new VehiculMotorizat(g1, 100, 5, "albastru", 240);
+		
+		System.out.println("Timpul parcurs de vehiculul motorizat a fost de: " +vehiculMotorizat.deplaseaza(g2)+" min.");
+		
+		VehiculMotorizat avion=new Avion(g1, 500, 5, "albastru", 240, 10000);
+		
+		System.out.println("Timpul parcurs de avion motorizat a fost de: " +avion.deplaseaza(g2)+" min.");
+		
+		System.out.println("Diferenta de timp este: "+(vehiculMotorizat.deplaseaza(g2)-avion.deplaseaza(g2))+" min");
+		
+	}
+}
+ 
+//Vehicul
+public class Vehicul{
+	
+	protected int nrMaxPasageri;
+	protected String culoare;
+	protected double vitMax;
+	
+	Vehicul(){
+		nrMaxPasageri=0;
+		culoare=null;
+		vitMax=0.0;
+	}
+	Vehicul(int nr, String c, double vit){
+		nrMaxPasageri=nr;
+		culoare=c;
+		vitMax=vit;
+	}
+	
+	
+}
+
+//VehiculMotorizat
+
+public class VehiculMotorizat extends Vehicul{
+	
+	GeoLoc pozitionare;
+	double viteza;
+	
+	VehiculMotorizat(){
+		super();
+		viteza=0;
+		pozitionare=new GeoLoc();
+	}
+	VehiculMotorizat(GeoLoc p, double vit, int nr, String c, double vit1){
+		super(nr, c, vit1);
+		viteza=vit;
+		pozitionare=p;
+	}
+	
+	public double deplaseaza(GeoLoc pozitieNoua) {
+		double result;
+		double long1, lat1;
+		double long2, lat2;
+		final double pi=3.14;
+		
+		long1=Math.toRadians(pozitionare.longitudine);
+		lat1=Math.toRadians(pozitionare.latitudine);
+		long2=Math.toRadians(pozitieNoua.longitudine);
+		lat2=Math.toRadians(pozitieNoua.latitudine);
+		
+		double longi=long2-long1;
+		double lati=lat2-lat1;
+		
+		double dist = Math.pow(Math.sin(lati / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(longi / 2), 2);
+		
+		double distFinala= 2 * Math.asin(Math.sqrt(dist))*6371;
+		
+		result=convert(distFinala/viteza);
+		
+		return result;
+	}
+	
+	public double convert(double timp) {
+		double min, ore, sec;
+		
+		min= (timp*60.0);
+		
+		return min;
+	}
+	
+	
+}
+
+//GeoLoc
+
+public class GeoLoc {
+	double longitudine, latitudine;
+	
+	GeoLoc(){
+		longitudine=0;
+		latitudine=0;
+	}
+	GeoLoc(double x, double y){
+		longitudine=x;
+		latitudine=y;
+	}
+}
+
+//Avion
+
+public class Avion extends VehiculMotorizat{
+
+	double altitudine;
+	
+	Avion(){
+		super();
+		altitudine=0;
+	}
+	Avion(GeoLoc p, double vit, int nr, String c, double vit1, double alt){
+		super(p, vit, nr, c, vit1);
+		altitudine=alt;
+	}
+	
+	@Override
+	public double deplaseaza(GeoLoc pozitieNoua) {
+		double result;
+		
+		double long1, lat1;
+		double long2, lat2;
+		double alt;
+		final double pi=3.14;
+		
+		long1=Math.toRadians(pozitionare.longitudine);
+		lat1=Math.toRadians(pozitionare.latitudine);
+		alt=Math.toRadians(altitudine);
+		long2=Math.toRadians(pozitieNoua.longitudine);
+		lat2=Math.toRadians(pozitieNoua.latitudine);
+		
+		double longi=long2-long1;
+		double lati=lat2-lat1;
+		
+		double dist = Math.pow(Math.sin(lati / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(longi / 2), 2)*alt*Math.cos(super.deplaseaza(pozitieNoua));
+		
+		double distFinala= 2 * Math.asin(Math.sqrt(dist))*6371;
+		
+		result=convert(distFinala/viteza);
+		
+		return result;
+	}
+	
+	
+	
+}
